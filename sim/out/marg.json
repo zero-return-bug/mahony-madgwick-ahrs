@@ -1,0 +1,10 @@
+{
+  "yaw6_end_deg": 44.455215458858326,
+  "yaw9_end_deg": 0.5446248819528104,
+  "yaw9_max_deg": 29.968252467706197,
+  "err9_conv_1deg_s": 7.46,
+  "err9_end_deg": 0.4870746055523052,
+  "beta": 0.08,
+  "bias_rps": 0.01,
+  "self_check_ok": true
+}

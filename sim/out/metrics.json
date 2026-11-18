@@ -1,0 +1,96 @@
+{
+  "track": {
+    "mahony_rmse_roll": 0.575241484052883,
+    "mahony_rmse_pitch": 0.5214305712009033,
+    "madgwick_rmse_roll": 0.5969846275017753,
+    "madgwick_rmse_pitch": 0.548944109467728,
+    "initial_error_deg": 9.988474930567094,
+    "window": "5-20 s",
+    "acc_noise_g": 0.06,
+    "gyro_noise_rps": 0.003
+  },
+  "conv": {
+    "mahony_t_1deg": 1.45,
+    "madgwick_t_1deg": 4.0600000000000005,
+    "mahony_t_5deg": 0.88,
+    "madgwick_t_5deg": 2.92
+  },
+  "impact": {
+    "mahony_peak": 12.464832318471997,
+    "madgwick_peak": 6.1566572965188335,
+    "adaptive_peak": 4.413859844564904,
+    "mahony_residual": 0.7461837764823022,
+    "madgwick_residual": 0.7943930925345614,
+    "adaptive_residual": 1.0134934535837006,
+    "steady_tilt_deg": 21.80140948635181
+  },
+  "yaw": {
+    "bias_dps": 0.57,
+    "mahony_end": 33.93199588770983,
+    "madgwick_end": 34.011490622350316,
+    "gyro_end": 34.02936586074253
+  },
+  "bigbias": {
+    "mahony_rmse": 1.7823403427928775,
+    "madgwick_rmse": 2.617531948149685
+  },
+  "sweep_kp": [
+    {
+      "kp": 0.5,
+      "ki": 0.01,
+      "rmse_roll": 0.9474614043037386,
+      "rmse_pitch": 1.0583751024591177
+    },
+    {
+      "kp": 1.0,
+      "ki": 0.02,
+      "rmse_roll": 0.615641248303477,
+      "rmse_pitch": 0.6593272303056406
+    },
+    {
+      "kp": 2.0,
+      "ki": 0.05,
+      "rmse_roll": 0.575241484052883,
+      "rmse_pitch": 0.5214305712009033
+    },
+    {
+      "kp": 4.0,
+      "ki": 0.1,
+      "rmse_roll": 0.6579653259210273,
+      "rmse_pitch": 0.5954083117459693
+    }
+  ],
+  "sweep_beta": [
+    {
+      "beta": 0.02,
+      "rmse_roll": 1.5410899158753075,
+      "rmse_pitch": 1.1932167881805753
+    },
+    {
+      "beta": 0.05,
+      "rmse_roll": 0.6676375451693742,
+      "rmse_pitch": 0.6390140761191092
+    },
+    {
+      "beta": 0.08,
+      "rmse_roll": 0.5969846275017753,
+      "rmse_pitch": 0.548944109467728
+    },
+    {
+      "beta": 0.15,
+      "rmse_roll": 0.6569893385376082,
+      "rmse_pitch": 0.5952388029267691
+    },
+    {
+      "beta": 0.3,
+      "rmse_roll": 0.8485713362591946,
+      "rmse_pitch": 0.7737434836718671
+    }
+  ],
+  "sign": {
+    "mahony_ok_rmse": 2.126653149845956,
+    "mahony_bad_rmse": 160.40231681225808,
+    "madgwick_ok_rmse": 2.8932065680979413,
+    "madgwick_bad_rmse": 41.90819969232315
+  }
+}
