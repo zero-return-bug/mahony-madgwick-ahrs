@@ -160,9 +160,10 @@ def main():
 
     # 读者手上没有 sim/ figs/ 这些目录，把「输出说明」改成对读者有意义的话
     repo = a.repo.rstrip("/") if a.repo else "【仓库地址待填】"
+    repo_label = ("[%s](%s)" % (repo.replace("https://", ""), repo)) if a.repo else repo
     body2 = body2.replace(
         "所有图都是脚本生成的，改参数重跑就行：",
-        "所有图与数字都是脚本跑出来的，脚本在 `%s` 的 `sim/` 目录，改参数重跑即可复现：" % repo)
+        "所有图与数字都是脚本跑出来的，脚本在 %s 的 `sim/` 目录，改参数重跑即可复现：" % repo_label)
     body2 = body2.replace(
         "输出：`figs/` 是 1200 px 博客版，`figs/wechat/` 是 1600 px 公众号版，同名可互换。",
         "想自己出图，改 `sim/figstyle.py` 里的字号和线宽就行；脚本一次渲染两套尺寸"
@@ -188,13 +189,31 @@ def main():
 
     if a.repo:
         r = a.repo.rstrip("/")
+        tok = {}
+        for name in ("sim_ahrs.py", "sim_marg.py", "make_diagrams.py", "make_figs.py",
+                     "figstyle.py", "_verify_c.py", "requirements.txt"):
+            tok["sim/" + name] = "%s/blob/main/sim/%s" % (r, name)
+            tok[name] = "%s/blob/main/sim/%s" % (r, name)
+        tok["sim/"] = "%s/tree/main/sim/" % r
+
+        # 一次扫描替换完，长的先匹配：避免 "sim/" 先被替换、把刚生成的新链接再切一遍。
+        # 整段 `sim/xxx.py` 这种行内代码换成 markdown 链接（CSDN 会渲染），
+        # 像 `python sim/_verify_c.py` 这种命令行原样保留。
+        pat = re.compile(r"`[^`\n]+`|" + "|".join(
+            re.escape(k) for k in sorted(tok, key=len, reverse=True)))
+
+        def link(m):
+            t = m.group(0)
+            if t[0] != "`":
+                return tok[t]
+            inner = t[1:-1]
+            return "[%s](%s)" % (inner, tok[inner]) if inner in tok else t
+
         for i, (fn, txt) in enumerate(parts):
-            txt = txt.replace("sim/requirements.txt", r + "/blob/main/sim/requirements.txt")
-            for m in ("sim_ahrs.py", "sim_marg.py", "make_diagrams.py", "make_figs.py",
-                      "_verify_c.py", "sim/"):
-                txt = txt.replace(m, r + "/tree/main/" + m if m == "sim/" else
-                                  r + "/blob/main/sim/" + m)
-            parts[i] = (fn, txt)
+            # 代码块里的命令保持相对路径（读者 clone 后直接跑），只给正文加链接
+            segs = re.split(r"(```.*?```)", txt, flags=re.S)
+            parts[i] = (fn, "".join(s if s.startswith("```") else pat.sub(link, s)
+                                    for s in segs))
 
     os.makedirs(os.path.join(OUT, "images"), exist_ok=True)
     total_img = 0
